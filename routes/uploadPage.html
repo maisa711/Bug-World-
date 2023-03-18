@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>File Upload Page</title>
+    <link rel="stylesheet" type="text/css" href="../css/uploadPage.css" />
+    <link rel="stylesheet" type="text/css" href="../css/app.css" />
+    <script
+      src="https://kit.fontawesome.com/19094358f0.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <h1>File Upload Page</h1>
+    <form action="mainPage.html" method="post">
+      <div class="mainDiv">
+        <div class="inpDiv">
+          <label for="divfile1">Please upload the world map:</label>
+          <div class="uploadFile" id="divfile1">
+            <label for="map">
+              <i class="fa-solid fa-file-arrow-up fa-2x"></i>
+            </label>
+            <input id="map" type="file" onchange="SaveFile(this)" />
+          </div>
+        </div>
+
+        <div class="inpDiv">
+          <label for="divfile2">Please upload the bug code 1:</label>
+          <div class="uploadFile" id="divfile2">
+            <label for="bugCode1">
+              <i class="fa-solid fa-file-arrow-up fa-2x"></i>
+            </label>
+
+            <input id="bugCode1" type="file" onchange="SaveFile(this)" />
+          </div>
+        </div>
+
+        <div class="inpDiv">
+          <label for="divfile3">Please upload the bug code 2:</label>
+          <div class="uploadFile" id="divfile3">
+            <label for="bugCode2">
+              <i class="fa-solid fa-file-arrow-up fa-2x"></i>
+            </label>
+
+            <input id="bugCode2" type="file" onchange="SaveFile(this)" />
+          </div>
+        </div>
+
+        <div class="inpDiv">
+          <label for="numIterations"
+            >Please enter the number of iterations:</label
+          >
+          <input
+            type="number"
+            id="numIterations"
+            onchange="saveIterations(this)"
+          />
+        </div>
+
+        <div class="inpDiv">
+          <label for="actLog"
+            >Do you want to log the results of the session:
+          </label>
+          <input type="checkbox" id="actLog" onchange="saveLog(this)" />
+        </div>
+
+        <button type="submit" class="upBtn">Upload Files</button>
+      </div>
+    </form>
+
+    <script>
+      function SaveFile(inp) {
+        const file = inp.files[0];
+
+        const reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          () => {
+
+
+            
+            // this will then display a text file
+            localStorage.setItem(inp.id, reader.result); // save contents to localStorage
+            const uploadedFileContents = localStorage.getItem(inp.id);
+            console.log(uploadedFileContents);
+          },
+          false
+        );
+
+        if (file) {
+          reader.readAsText(file);
+        }
+
+        
+      }
+
+      function saveIterations(inp) {
+        localStorage.setItem(inp.id, inp.value); // save contents to localStorage
+        const uploadedFileContents = localStorage.getItem(inp.id);
+        console.log(uploadedFileContents);
+      }
+
+      function saveLog(inp) {
+        localStorage.setItem(inp.id, inp.checked); // save contents to localStorage
+        const uploadedFileContents = localStorage.getItem(inp.id);
+        console.log(uploadedFileContents);
+      }
+
+      console.log(localStorage.getItem("map"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Game</title>
+    <link rel="stylesheet" type="text/css" href="../css/mainPage.css" />
+  </head>
+  <body>
+    <div id="game-field"></div>
+    <template>
+      <div class="overlay">
+        <div class="module">
+          <h1>Options</h1>
+          <div class="modDiv">
+            <label for="change-bug-1">Change bugs' color #1:</label>
+            <input type="text" id="change-bug-1" />
+          </div>
+
+          <div class="modDiv">
+            <label for="change-bug-2">Change bugs' color #2:</label>
+            <input type="text" id="change-bug-2" />
+          </div>
+
+          <div class="modDiv">
+            <label for="num-iterations">Number of Iterations:</label>
+            <input type="number" id="num-iterations" />
+          </div>
+          <div class="modDiv">
+            <label for="tick-duration">Duration of a tick in seconds:</label>
+            <input type="number" id="tick-duration" />
+          </div>
+          <button id="close-btn" class="close-btn">Save</button>
+        </div>
+      </div>
+    </template>
+
+    <div id="game-stats">
+      <!-- Game statistics -->
+      <div>
+        <strong>Iterations:</strong>
+        <span id="iteration-count">200/500</span>
+      </div>
+      <div>
+        <strong>Amount of undetected food:</strong>
+        <span id="undetected-food">20</span>
+      </div>
+      <div>
+        <strong>Red bugs Remaining:</strong>
+        <span id="red-bugs-left">5</span>
+      </div>
+      <div>
+        <strong>Red bugs Killed:</strong>
+        <span id="red-bugs-killed">19</span>
+      </div>
+
+      <div>
+        <strong>Food Brought home by red bugs:</strong>
+        <span id="red-brought-food">4</span>
+      </div>
+
+      <div>
+        <strong>Black bugs Remaining:</strong>
+        <span id="black-bugs-left">7</span>
+      </div>
+      <div>
+        <strong>Black bugs Killed:</strong>
+        <span id="black-bugs-killed">8</span>
+      </div>
+
+      <div>
+        <strong>Food Brought home by black bugs:</strong>
+        <span id="black-brought-food">9</span>
+      </div>
+    </div>
+
+    <div id="log-field"></div>
+    <div id="game-controls">
+      <!-- Game settings buttons -->
+      <button id="start-button">Start</button>
+      <button class="open-btn">Open Popup</button>
+      <popup-element></popup-element>
+
+      <!-- Exit button -->
+      <button id="exit-button">Exit</button>
+    </div>
+
+    <script>
+      class Popup extends HTMLElement {
+        constructor() {
+          super();
+
+          const template = document.getElementById("popup-template").content;
+          const shadowRoot = this.attachShadow({ mode: "open" });
+
+          shadowRoot.appendChild(template.cloneNode(true));
+
+          const openBtn = this.querySelector(".open-btn");
+          const overlay = this.shadowRoot.querySelector(".overlay");
+          const closeBtn = this.shadowRoot.querySelector(".close-btn");
+
+          // Function to open the module pop-up
+          const openModule = () => {
+            overlay.style.display = "flex";
+          };
+
+          // Function to close the module pop-up
+          const closeModule = () => {
+            overlay.style.display = "none";
+          };
+
+          // Event listener for opening the module pop-up
+          openBtn.addEventListener("click", openModule);
+
+          // Event listener for closing the module pop-up
+          closeBtn.addEventListener("click", closeModule);
+        }
+      }
+
+      customElements.define("popup-element", Popup);
+    </script>
+  </body>
+</html>

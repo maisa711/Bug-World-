@@ -1,0 +1,38 @@
+form {
+    margin-top: 50px;
+}
+
+.uploadFile>input {
+    display: none;
+  }
+
+.inpDiv {
+    display: flex;
+    flex-direction: row;
+	align-items: center;
+	justify-content: center;
+    gap: 100px;
+    margin: 10px;
+    margin-bottom: 20px;
+}
+
+.upBtn{
+    margin-top: 50px;
+}
+
+input[type="number"] {
+    border-radius: 4px;
+    border: none;
+    width: 100px;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+
+
+.mainDiv{
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 20px;
+    padding: 100px;
+}
