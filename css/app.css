@@ -1,13 +1,13 @@
 body {
     background-color: #f2f2f2;
     font-family: Arial, sans-serif;
-    text-align: center;
 }
 
 h1 {
     font-size: 36px;
     color: #333;
     margin-top: 50px;
+    text-align: center;
 }
 
 button {
@@ -26,3 +26,11 @@ button:hover {
     background-color: #555;
 }
 
+.mainDiv {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 20px;
+    padding: 100px;
+    align-items: center;
+    justify-content: center;
+}
