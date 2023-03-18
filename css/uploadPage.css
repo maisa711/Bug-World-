@@ -6,16 +6,6 @@ form {
     display: none;
   }
 
-.inpDiv {
-    display: flex;
-    flex-direction: row;
-	align-items: center;
-	justify-content: center;
-    gap: 100px;
-    margin: 10px;
-    margin-bottom: 20px;
-}
-
 .upBtn{
     margin-top: 50px;
 }
@@ -27,8 +17,6 @@ input[type="number"] {
     height: 30px;
     box-sizing: border-box;
 }
-
-
 
 .mainDiv{
     display: grid;

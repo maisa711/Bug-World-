@@ -57,40 +57,6 @@
       <button type="submit" class="upBtn">Upload Files</button>
     </form>
 
-    <script>
-      function SaveFile(inp) {
-        const file = inp.files[0];
-
-        const reader = new FileReader();
-        reader.addEventListener(
-          "load",
-          () => {
-            // this will then display a text file
-            localStorage.setItem(inp.id, reader.result); // save contents to localStorage
-            const uploadedFileContents = localStorage.getItem(inp.id);
-            console.log(uploadedFileContents);
-          },
-          false
-        );
-
-        if (file) {
-          reader.readAsText(file);
-        }
-      }
-
-      function saveIterations(inp) {
-        localStorage.setItem(inp.id, inp.value); // save contents to localStorage
-        const uploadedFileContents = localStorage.getItem(inp.id);
-        console.log(uploadedFileContents);
-      }
-
-      function saveLog(inp) {
-        localStorage.setItem(inp.id, inp.checked); // save contents to localStorage
-        const uploadedFileContents = localStorage.getItem(inp.id);
-        console.log(uploadedFileContents);
-      }
-
-      console.log(localStorage.getItem("map"));
-    </script>
+    <script src="../js/uploadPage.js"></script>
   </body>
 </html>
