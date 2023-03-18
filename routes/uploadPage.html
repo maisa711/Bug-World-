@@ -4,6 +4,7 @@
     <title>File Upload Page</title>
     <link rel="stylesheet" type="text/css" href="../css/uploadPage.css" />
     <link rel="stylesheet" type="text/css" href="../css/app.css" />
+    <!-- uses fontawesome for icons -->
     <script
       src="https://kit.fontawesome.com/19094358f0.js"
       crossorigin="anonymous"
@@ -13,6 +14,7 @@
     <h1>File Upload Page</h1>
     <form action="mainPage.html" method="post">
       <div class="mainDiv">
+        <!-- Map file upload -->
         <label for="divfile1">Please upload the world map:</label>
         <div class="uploadFile" id="divfile1">
           <label for="map">
@@ -21,6 +23,7 @@
           <input id="map" type="file" onchange="SaveFile(this)" />
         </div>
 
+        <!-- Bug code 1 file upload -->
         <label for="divfile2">Please upload the bug code 1:</label>
         <div class="uploadFile" id="divfile2">
           <label for="bugCode1">
@@ -30,6 +33,7 @@
           <input id="bugCode1" type="file" onchange="SaveFile(this)" />
         </div>
 
+        <!-- Bug code 2 file upload -->
         <label for="divfile3">Please upload the bug code 2:</label>
         <div class="uploadFile" id="divfile3">
           <label for="bugCode2">
@@ -39,21 +43,21 @@
           <input id="bugCode2" type="file" onchange="SaveFile(this)" />
         </div>
 
+        <!-- Input Number of iterations -->
         <label for="numIterations"
           >Please enter the number of iterations:</label
         >
-        <input
-          type="number"
-          id="numIterations"
-          onchange="saveIterations(this)"
+        <input type="number" id="numIterations" onchange="saveIterations(this)"
         />
 
+        <!-- Log Checkbox -->
         <label for="actLog"
           >Do you want to log the results of the session:
         </label>
         <input type="checkbox" id="actLog" onchange="saveLog(this)" />
-
       </div>
+
+      <!-- Submit -->
       <button type="submit" class="upBtn">Upload Files</button>
     </form>
 

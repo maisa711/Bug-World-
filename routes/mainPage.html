@@ -5,8 +5,10 @@
     <link rel="stylesheet" type="text/css" href="../css/mainPage.css" />
   </head>
   <body>
+    <!-- displays the game field -->
     <div id="game-field"></div>
 
+    <!-- popup for options menu (hidden by default) -->
     <div class="overlay" id="options-popup">
       <div class="module">
         <div class="popupHeader">
@@ -31,6 +33,7 @@
       </div>
     </div>
 
+    <!-- popup for exit menu (hidden by default) -->
     <div class="overlay" id="exit-popup">
       <div class="module">
         <div class="popupHeader">
@@ -43,15 +46,15 @@
       </div>
     </div>
 
+    <!-- display the game statistics, utilizing js loop to add items -->
     <div id="game-stats"></div>
 
+    <!-- display the game log -->
     <div id="log-field"></div>
+
     <div id="game-controls">
-      <!-- Game settings buttons -->
       <button id="start-button">Start</button>
       <button id="options" onclick="popup(this)">Options</button>
-
-      <!-- Exit button -->
       <button id="exit" onclick="popup(this)">Exit</button>
     </div>
 
