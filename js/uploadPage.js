@@ -144,7 +144,7 @@ function saveLog(inp) {
 }
 
 function saveBug(inp) {
-
+  
   // regex for each command, to determine the format of the commands
   // sense ahead 1 3 food; [0] <- example
   // there shouldn't be any addiotional spaces
@@ -218,9 +218,14 @@ function saveBug(inp) {
 
       console.log("all good");
 
+      // get the file name
+      let fileName = inp.value.split(/(\\|\/)/g).pop().split('.')[0];
 
       //save file to localStorage, key is the id of the input element
-      //localStorage.setItem(inp.id, reader.result);
+      //object is converted to a string
+      //to convert back to an object, use JSON.parse(object)
+      localStorage.setItem(fileName + "_bug", JSON.stringify(bugCode));
+      console.log(localStorage.getItem("Red_bug"));
     },
     false
   );
@@ -230,3 +235,4 @@ function saveBug(inp) {
     reader.readAsText(file);
   }
 }
+
