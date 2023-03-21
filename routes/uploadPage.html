@@ -62,7 +62,8 @@
   <script>
 
     function SaveFile(inp) {
-      const file = inp.files[0]; const reader = new FileReader();
+      const file = inp.files[0]; 
+      const reader = new FileReader();
       reader.addEventListener(
         "load",
         function (event) {            // this will then display a text file
