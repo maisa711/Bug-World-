@@ -5,100 +5,59 @@
     <link rel="stylesheet" type="text/css" href="../css/mainPage.css" />
   </head>
   <body>
+    <!-- displays the game field -->
     <div id="game-field"></div>
 
-    <div class="overlay">
+    <!-- popup for options menu (hidden by default) -->
+    <div class="overlay" id="options-popup">
       <div class="module">
-        <h1>Options</h1>
-        <div class="modDiv">
+        <div class="popupHeader">
+          <h1>Options</h1>
+        </div>
+        <div class="popupContent">
           <label for="change-bug-1">Change bugs' color #1:</label>
           <input type="text" id="change-bug-1" />
-        </div>
 
-        <div class="modDiv">
           <label for="change-bug-2">Change bugs' color #2:</label>
           <input type="text" id="change-bug-2" />
-        </div>
 
-        <div class="modDiv">
           <label for="num-iterations">Number of Iterations:</label>
           <input type="number" id="num-iterations" />
-        </div>
-        <div class="modDiv">
+
           <label for="tick-duration">Duration of a tick in seconds:</label>
           <input type="number" id="tick-duration" />
         </div>
-        <button id="close-btn" class="close-btn">Save</button>
+        <div class="popupFooter">
+          <button id="close-btn" class="close-btn">Save</button>
+        </div>
       </div>
     </div>
 
-    <div id="game-stats">
-      <!-- Game statistics -->
-      <div>
-        <strong>Iterations:</strong>
-        <span id="iteration-count">200/500</span>
-      </div>
-      <div>
-        <strong>Amount of undetected food:</strong>
-        <span id="undetected-food">20</span>
-      </div>
-      <div>
-        <strong>Red bugs Remaining:</strong>
-        <span id="red-bugs-left">5</span>
-      </div>
-      <div>
-        <strong>Red bugs Killed:</strong>
-        <span id="red-bugs-killed">19</span>
-      </div>
-
-      <div>
-        <strong>Food Brought home by red bugs:</strong>
-        <span id="red-brought-food">4</span>
-      </div>
-
-      <div>
-        <strong>Black bugs Remaining:</strong>
-        <span id="black-bugs-left">7</span>
-      </div>
-      <div>
-        <strong>Black bugs Killed:</strong>
-        <span id="black-bugs-killed">8</span>
-      </div>
-
-      <div>
-        <strong>Food Brought home by black bugs:</strong>
-        <span id="black-brought-food">9</span>
+    <!-- popup for exit menu (hidden by default) -->
+    <div class="overlay" id="exit-popup">
+      <div class="module">
+        <div class="popupHeader">
+          <h1>Do you really want to quit?</h1>
+        </div>
+        <div class="popupContent">
+          <button class="close-btn">Yes</button>
+          <button id="close-btn" class="close-btn">No</button>
+        </div>
       </div>
     </div>
 
+    <!-- display the game statistics, utilizing js loop to add items -->
+    <div id="game-stats"></div>
+
+    <!-- display the game log -->
     <div id="log-field"></div>
-    <div id="game-controls">
-      <!-- Game settings buttons -->
-      <button id="start-button">Start</button>
-      <button id="options-button">Options</button>
 
-      <!-- Exit button -->
-      <button id="exit-button">Exit</button>
+    <div id="game-controls">
+      <button id="start-button">Start</button>
+      <button id="options" onclick="popup(this)">Options</button>
+      <button id="exit" onclick="popup(this)">Exit</button>
     </div>
 
-    <script>
-      const openBtn = document.getElementById("options-button");
-      const overlay = document.querySelector(".overlay");
-      const closeBtn = document.getElementById("close-btn");
-
-      // Function to open the module pop-up
-      function openModule() {
-        overlay.style.display = "flex";
-      }
-
-      // Function to close the module pop-up
-      function closeModule() {
-        overlay.style.display = "none";
-      }
-
-      // Event listeners for opening and closing the module pop-up
-      openBtn.addEventListener("click", openModule);
-      closeBtn.addEventListener("click", closeModule);
-    </script>
+    <script src="../js/mainPage.js"></script>
   </body>
 </html>
