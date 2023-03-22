@@ -35,7 +35,7 @@ function SaveFile(inp) {
           if (i === 2 || i === lines.length) {
             const samplecharacters = line.split(" ");
             if (samplecharacters.length !== b) {
-              // There should be b characters separated by a space
+              // There  should be b characters separated by a space
               console.log("incorrect number of columns");
             }
             for (let j = 0; j < samplecharacters.length; j++) {
@@ -73,7 +73,9 @@ function SaveFile(inp) {
                   characters[j + 1] === "+"
                 ) {
                 } else {
-                  console.log("plus swarms not linked");
+                  if(plusno>1){
+                    console.log("plus swarms not linked");
+                  }
                 }
               }
 
@@ -83,11 +85,13 @@ function SaveFile(inp) {
                   characters[j + 1] === "-"
                 ) {
                 } else {
-                  console.log("minus swarms not linked");
-                }
+                  if(minusno>1){
+                    console.log("minus swarms not linked");
+                  }                }
               }
 
-              if (!/^[\d#.+\\-]$/.test(character)) {
+              const regex=!/^[\d#.+\\-]$/;
+              if (regex.test(character)) {
                 // Only allow #, digits, ., +, -
                 console.log("out of bounds");
               }
@@ -127,9 +131,7 @@ function SaveFile(inp) {
     );
 
     if (file) {
-      reader.readAsText(file);
-      const contents = reader.result;
-      console.log("read content");
+     
     }
   }
 
@@ -137,6 +139,7 @@ function SaveFile(inp) {
   function saveIterations(inp) {
     if (inp.value > 0 && !inp.value == "") {
       localStorage.setItem(inp.id, inp.value);
+      localStorage.getItem();
     }
   }
 
