@@ -144,19 +144,20 @@ function saveLog(inp) {
 }
 
 function saveBug(inp) {
-  
   // regex for each command, to determine the format of the commands
-  // sense ahead 1 3 food; [0] <- example
-  // there shouldn't be any addiotional spaces
-  // sense ahead 1 3 food ; [0 ] <- incorrect
-  const sense = /^sense (here|ahead|leftahead|rightahead) \d+ \d+ (friend|foe|friendwithfood|foewithfood|food|rock|marker|foemarker|home|foehome); \[\d+\]$/;
-  const mark = /^mark \d+ \d+; \[\d+\]$/;
-  const unmark = /^unmark \d+ [\d+]; \[\d+\]$/;
-  const pickup = /^pickup \d+ \d+; \[\d+\]$/;
-  const drop = /^drop \d+; \[\d+\]$/;
-  const turn = /^turn (left|right) \d+; \[\d+\]$/;
-  const move = /^move \d+ \d+; \[\d+\]$/;
-  const flip = /^flip \d+ \d+ \d+; \[\d+\]$/;
+  // example of the sense command format
+  // sense ahead 1 3 food; after semi-colon everything is a comment
+  const sense = /^sense (here|ahead|leftahead|rightahead) \d+ \d+ (friend|foe|friendwithfood|foewithfood|food|rock|marker|foemarker|home|foehome);.*$/;
+  const mark = /^mark \d+ \d+;.*$/;
+  const unmark = /^unmark \d+ [\d+];.*$/;
+  const pickup = /^pickup \d+ \d+;.*$/;
+  const drop = /^drop \d+;.*$/;
+  const turn = /^turn (left|right) \d+;.*$/;
+  const move = /^move \d+ \d+;.*$/;
+  const flip = /^flip \d+ \d+ \d+;.*$/;
+
+  // regex if there is only a comment
+  const comment = /^;.*$/;
 
   // get the file from the input element
   const file = inp.files[0];
@@ -168,7 +169,7 @@ function saveBug(inp) {
   reader.addEventListener(
     "load",
     function (event) {
-      //grab file's text 
+      //grab file's text
       const text = reader.result;
 
       const lines = text.split("\r\n");
@@ -180,24 +181,25 @@ function saveBug(inp) {
       lines.forEach((line, i) => {
         line = line.trim();
 
-        // check if the line has a vaild format
-        if (sense.test(line) || mark.test(line) || unmark.test(line) || pickup.test(line) || drop.test(line) || turn.test(line) || move.test(line) || flip.test(line)) {
-          line = line.split(";");
-          
-          // if this is the instuction
-          // sense ahead 1 3 food; [0]
-          // then the key would be "0"
-          // and the value would be "sense ahead 1 3 food"
-          let key = line[1].split(/\[|\]/)[1];
-          if (key != i) {
-            throw ("incorrect index");
-          }
-          let value = line[0];
-
-          //if evething is good, add the instruction to the object
-          bugCode[key] = value;
+        // check if the line has commands or is it just a comment
+        if (comment.test(line)) {
+          throw "lack of commands"
         } else {
-          throw ("incorrect syntax");
+          // check if the line has a vaild format
+          if (sense.test(line) || mark.test(line) || unmark.test(line) || pickup.test(line) || drop.test(line) || turn.test(line) || move.test(line) || flip.test(line)) {
+            onlyComments = false;
+
+            line = line.split(";");
+
+            // get the instruction value
+            let value = line[0];
+
+            //if evething is good, add the instruction to the object
+            // key is the index of the line and the value is the instruction
+            bugCode[i] = value;
+          } else {
+            throw "incorrect syntax";
+          }
         }
       });
 
@@ -210,22 +212,24 @@ function saveBug(inp) {
 
         nums.forEach((num) => {
           if (num > bugCodeLen) {
-            throw ("link to a non-existent line");
+            throw "link to a non-existent line";
           }
         });
-
       }
 
       console.log("all good");
 
       // get the file name
-      let fileName = inp.value.split(/(\\|\/)/g).pop().split('.')[0];
+      let fileName = inp.value
+        .split(/(\\|\/)/g)
+        .pop()
+        .split(".")[0];
 
       //save file to localStorage, key is the id of the input element
       //object is converted to a string
       //to convert back to an object, use JSON.parse(object)
       localStorage.setItem(fileName + "_bug", JSON.stringify(bugCode));
-      console.log(localStorage.getItem("Red_bug"));
+      console.log(JSON.parse(localStorage.getItem("Red_bug")));
     },
     false
   );
@@ -235,4 +239,3 @@ function saveBug(inp) {
     reader.readAsText(file);
   }
 }
-
