@@ -18,6 +18,26 @@
     justify-content: center;
     align-items: center;
   }
+  .errsection2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .successsection2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .errsection3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .successsection3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
 .formsection form {
     margin-top: 0px;
@@ -33,12 +53,32 @@
    margin-top: 10px;
 }
 
-#successtxt{
+#successtxt1{
     margin-left: 12px;
     text-align: center;
     margin-top: 20px;
 }
-#errortxt{
+#errortxt1{
+    margin-left: 12px;
+    text-align: center;
+    margin-top: 20px;
+}
+#successtxt2{
+    margin-left: 12px;
+    text-align: center;
+    margin-top: 20px;
+}
+#errortxt2{
+    margin-left: 12px;
+    text-align: center;
+    margin-top: 20px;
+}
+#successtxt3{
+    margin-left: 12px;
+    text-align: center;
+    margin-top: 20px;
+}
+#errortxt3{
     margin-left: 12px;
     text-align: center;
     margin-top: 20px;
@@ -65,7 +105,7 @@ input[type="number"] {
 input[type="file"] {
     margin-top: 20px;   
 }
-#success-message {
+#success-message1 {
     color: #22BE61;
     font-weight: 400;
     text-align: center;
@@ -73,7 +113,37 @@ input[type="file"] {
     align-content: center;
   }
 
-#error-message {
+#error-message1 {
+    color: #FF8181;
+    font-weight: 400;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+  }
+  #success-message2 {
+    color: #22BE61;
+    font-weight: 400;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+  }
+
+#error-message2 {
+    color: #FF8181;
+    font-weight: 400;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+  }
+  #success-message3 {
+    color: #22BE61;
+    font-weight: 400;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+  }
+
+#error-message3 {
     color: #FF8181;
     font-weight: 400;
     text-align: center;
