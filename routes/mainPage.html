@@ -4,12 +4,12 @@
     <title>My Game</title>
     <link rel="stylesheet" type="text/css" href="../css/mainPage.css" />
   </head>
-  <body>
+  <body onload="pageLoad()"> <!-- when the page is loaded trigger function pageLoad -->
     <!-- displays the game field -->
     <div id="game-field"></div>
 
     <!-- popup for options menu (hidden by default) -->
-    <div class="overlay" id="options-popup">
+    <div class="overlay" id="options-popup" >
       <div class="module">
         <div class="popupHeader">
           <h1>Options</h1>
@@ -28,7 +28,9 @@
           <input type="number" id="tick-duration" />
         </div>
         <div class="popupFooter">
-          <button id="close-btn" class="close-btn">Save</button>
+
+          <!-- when close button is pressed trigger saveOptions function -->
+          <button id="close-btn" class="close-btn" onclick="saveOptions(this)">Save</button>
         </div>
       </div>
     </div>
@@ -40,13 +42,15 @@
           <h1>Do you really want to quit?</h1>
         </div>
         <div class="popupContent">
-          <button class="close-btn">Yes</button>
+
+          <!-- when close button is pressed trigger quitGame function -->
+          <button class="close-btn" onclick="quitGame(this)">Yes</button>
           <button id="close-btn" class="close-btn">No</button>
         </div>
       </div>
     </div>
 
-    <!-- display the game statistics, utilizing js loop to add items -->
+    <!-- display the game statistics, utilizing js loop when the page is loaded to add items -->
     <div id="game-stats"></div>
 
     <!-- display the game log -->
@@ -54,7 +58,11 @@
 
     <div id="game-controls">
       <button id="start-button">Start</button>
-      <button id="options" onclick="popup(this)">Options</button>
+
+      <!-- when options button is pressed trigger loadOptions function which reveals the popup menu-->
+      <button id="options" onclick="loadOptions(this)">Options</button>
+
+      <!-- when exit button is pressed trigger popup function which reveals the popup menu-->
       <button id="exit" onclick="popup(this)">Exit</button>
     </div>
 

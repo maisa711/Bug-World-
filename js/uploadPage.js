@@ -1,63 +1,75 @@
+// function for map upload and validation
 function SaveFile(inp) {
+  // get error message, error text and success message elements
+  const errorMessage = document.getElementById('error-message-map');
+  const errortxt = document.getElementById('error-txt-map');
+  const successMessage = document.getElementById('success-message-map');
+
+  // get the file from the input element
   const file = inp.files[0];
+
+  // create a new FileReader object
   const reader = new FileReader();
+
+  // add an event listener to deal with the file when the reader is done
   reader.addEventListener(
     "load",
+
     function (event) {
-      // this will then display a text file
-      localStorage.setItem(inp.id, reader.result); // save contents to localStorage
-      const uploadedFileContents = localStorage.getItem(inp.id);
-      console.log(uploadedFileContents);
-      var text = event.target.result;
+      // get the text from the file
+      let text = reader.result;
+
+      // split the text into lines
       const lines = text.split("\n");
-      const a = parseInt(lines[0]);
-      const b = parseInt(lines[1]);
+      let errortext = "An error occured";
+      const a = parseInt(lines[1]); //height or num of rows
+      const b = parseInt(lines[0]);  //width or num of column
 
-      var plusno = 0;
-      var minusno = 0;
+      // number of +, - and food in the map
+      let plusno = 0;
+      let minusno = 0;
+      let foodSum = 0;
 
-      let plusFound = false;
-      let minusFound = false;
+      let hasError = false;
       const numLinesAfterSecondLine = lines.length - 2;
       // Verify number of lines after the second line
-
       if (numLinesAfterSecondLine == a) {
         console.log("correct number of rows");
       } else {
-        console.log("incorrect number of rows");
+        errortext = "Incorrect height. Correct and upload again";
       }
       for (let i = 2; i < lines.length; i++) {
         const line = lines[i].trim(); // Remove leading/trailing whitespaces
 
         // Verify first and last character of line is #
         if (line[0] !== "#" || line[line.length - 1] !== "#") {
-          console.log("no outer border");
+          errortext = "Outer border error. Correct and upload again";
+          hasError = true;
         }
         if (i === 2 || i === lines.length) {
           const samplecharacters = line.split(" ");
           if (samplecharacters.length !== b) {
             // There should be b characters separated by a space
-            console.log("incorrect number of columns");
+            errortext = "Incorrect width. Correct and upload again";
+            hasError = true;
           }
           for (let j = 0; j < samplecharacters.length; j++) {
             if (samplecharacters[j] !== "#") {
-              console.log("border error");
+              errortext = "Border error. Correct and upload again";
+              hasError = true;
             }
           }
         }
         // Verify characters separated by space are valid
         if (i !== 2 && i !== lines.length - 1) {
           const characters = line.split(" ");
-          if (characters.length !== b) {
-            // There should be b characters separated by a space
-            console.log("incorrect number of columns");
-          }
           for (let j = 0; j < characters.length; j++) {
             if (i === 2 || i === lines.length - 1) {
               const characters = line.split(" ");
               for (let j = 0; j < characters.length; j++) {
                 if (characters[j] !== "#" && characters.length != b) {
-                  console.log("border error");
+                  errortext = "Border error. Correct and upload again";
+                  hasError = true;
                 }
               }
             }
@@ -69,61 +81,77 @@ function SaveFile(inp) {
               minusno++;
             }
             if (characters[j] === "+") {
-              if (characters[j - 1] === "+" || characters[j + 1] === "+") {
+              if (
+                characters[j - 1] === "+" ||
+                characters[j + 1] === "+"
+              ) {
               } else {
-                console.log("plus swarms not linked");
+                if (plusno > 1) {
+                  errortext = "Swarm error. Correct and upload again";
+                  hasError = true;
+                }
               }
             }
 
             if (characters[j] === "-") {
-              if (characters[j - 1] === "-" || characters[j + 1] === "-") {
+              if (
+                characters[j - 1] === "-" ||
+                characters[j + 1] === "-"
+              ) {
               } else {
-                console.log("minus swarms not linked");
+                if (minusno > 1) {
+                  errortext = "Swarm error. Correct and upload again";
+                  hasError = true;
+                }
               }
             }
 
             if (!/^[\d#.+\\-]$/.test(character)) {
               // Only allow #, digits, ., +, -
-              console.log("out of bounds");
+              errortext = "Value out of bounds. Correct and upload again";
+              hasError = true;
             }
-            if (character === "+") {
-              hasPlus = true;
-            } else if (character === "-") {
-              hasMinus = true;
-            } else if (/^[1-9]$/.test(character)) {
+
+            if (/^[1-9]$/.test(character)) {
+              foodSum += parseInt(character);
               // Verify that a number from 1 to 9 is separated by space
               if (j === 0 || j === characters.length - 1) {
-                console.log("number out of bounds");
+                errortext = "Value out of bounds. Correct and upload again";
+                hasError = true;
               }
-              /*
-           const previousCharacter = characters[j - 1];
-            const nextCharacter = characters[j + 1];
-            if (previousCharacter !== '.' && previousCharacter !== '-') {
-              console.log("spacing error");
-            }
-            if (nextCharacter !== '.' && nextCharacter !== '+') {
-              console.log("spacing error");
-            }*/
-            } else {
-              // Any other character separated by space is considered an error
-              // console.log("ou of bounds");
+
             }
           }
         }
       }
       if (plusno === 0 || minusno === 0) {
-        console.log("swarm error");
-      }
-      if (!plusFound || !minusFound) {
-        //console.log("swarms missing");
+        errortext = "Swarm error. Correct and upload again";
+        hasError = true;
       }
 
-      localStorage.setItem(inp.id + "_w", a);
-      localStorage.setItem(inp.id + "_h", b);
+      // if there is an error, display the error message, else display the success message
+      if (hasError) {
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'flex';
+        errortxt.innerHTML = errortext;
+        throw errortext;
+      } else {
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'flex';
+      }
+
+      let inpID = inp.id;
+      
+      // if there are no errors save the map, food, swarms and dimensions to game attributes in localStorage
+      saveGameAttr("map_attributes", {"structure": text, "food": foodSum, "swarms": {"numBug1": plusno, "numBug2": minusno}, "height": a, "width": b});
+
+      // add validation to make sure that the map is uploaded
+      saveGameAttr("valid", {[inpID]: true});
     },
     false
   );
 
+  // reads the file as text
   if (file) {
     reader.readAsText(file);
     const contents = reader.result;
@@ -133,17 +161,37 @@ function SaveFile(inp) {
 
 // save number of iterations to localStorage, key is the id of the input element
 function saveIterations(inp) {
+  let inpID = inp.id;
   if (inp.value > 0 && !inp.value == "") {
-    localStorage.setItem(inp.id, inp.value);
+
+    // save the number of iterations to game attributes in localStorage
+    saveGameAttr(inpID, inp.value);
+
+    // add validation to make sure that the number is entered
+    saveGameAttr("valid", {[inpID]: true});
+  }
+  else{
+    // if number is not entered, set validation to false
+    saveGameAttr("valid", {[inpID]: false});
   }
 }
 
 // save log info to localStorage, key is the id of the input element
 function saveLog(inp) {
-  localStorage.setItem(inp.id, inp.checked);
+  // save the log checkbox to game attributes in localStorage
+  saveGameAttr(inp.id, inp.checked);
 }
 
+// function for saving bug code to localStorage and validating the code
 function saveBug(inp) {
+  // get error message, error text and success message elements
+  const errorMessage = document.getElementById(`error-message-${inp.id}`);
+  const errortxt = document.getElementById(`error-txt-${inp.id}`);
+  const successMessage = document.getElementById(`success-message-${inp.id}`);
+
+  let errortext = "An error occured";
+  let hasError = false;
+
   // regex for each command, to determine the format of the commands
   // example of the sense command format
   // sense ahead 1 3 food; after semi-colon everything is a comment
@@ -172,7 +220,7 @@ function saveBug(inp) {
       //grab file's text
       const text = reader.result;
 
-      const lines = text.split("\r\n");
+      const lines = text.split("\n");
 
       // create an object to store the instructions
       let bugCode = {};
@@ -183,9 +231,10 @@ function saveBug(inp) {
 
         // check if the line has commands or is it just a comment
         if (comment.test(line)) {
-          throw "lack of commands"
+          errortext = "Lack of commands. Correct and upload again";
+          hasError = true;
         } else {
-          // check if the line has a vaild format
+          // check if the line has a valid format
           if (sense.test(line) || mark.test(line) || unmark.test(line) || pickup.test(line) || drop.test(line) || turn.test(line) || move.test(line) || flip.test(line)) {
             onlyComments = false;
 
@@ -198,7 +247,8 @@ function saveBug(inp) {
             // key is the index of the line and the value is the instruction
             bugCode[i] = value;
           } else {
-            throw "incorrect syntax";
+            errortext = "Incorrect syntax. Correct and upload again";
+            hasError = true;
           }
         }
       });
@@ -212,12 +262,11 @@ function saveBug(inp) {
 
         nums.forEach((num) => {
           if (num > bugCodeLen) {
-            throw "link to a non-existent line";
+            errortext = "Link to a non-existent line. Correct and upload again";
+            hasError = true;
           }
         });
       }
-
-      console.log("all good");
 
       // get the file name
       let fileName = inp.value
@@ -225,11 +274,33 @@ function saveBug(inp) {
         .pop()
         .split(".")[0];
 
-      //save file to localStorage, key is the id of the input element
-      //object is converted to a string
-      //to convert back to an object, use JSON.parse(object)
-      localStorage.setItem(fileName + "_bug", JSON.stringify(bugCode));
-      console.log(JSON.parse(localStorage.getItem("Red_bug")));
+      
+      let inpID = inp.id;
+
+      // check if the file name is the same as the other bug
+      if (isnNameInvalid(inpID, fileName)) {
+          errortext = "Bug1 and Bug2 can't have the same name. Correct and upload again";
+          hasError = true;
+      }
+
+      // if there is an error, display the error message, else display the success message
+      if (hasError) {
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'flex';
+        errortxt.innerHTML = errortext;
+        throw errortext;
+      } else {
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'flex';
+      }
+
+      console.log("all good");
+
+      // if there are no errors save the bug code and bug color to game attributes in localStorage
+      saveGameAttr(inpID, {"code": JSON.stringify(bugCode), "color": fileName});
+
+      // add validation to make sure that the bug code is uploaded
+      saveGameAttr("valid", {[inpID]: true});
     },
     false
   );
@@ -237,5 +308,22 @@ function saveBug(inp) {
   // reads the file as text
   if (file) {
     reader.readAsText(file);
+  }
+
+}
+
+// function to make sure that all the files are uploaded and proceed to the next page
+function uploadFiles() {
+  console.log("uploading files");
+  let gameAttributes = JSON.parse(localStorage.getItem('game_attributes')) || null;
+
+  let gameAttrValid = !(gameAttributes === null); // check if gameAttributes exists
+  let validObjInGameAttr = 'valid' in gameAttributes; // check if valid object exists in gameAttributes
+  let allFilesUploaded = Object.values(gameAttributes.valid).every(item => item === true); // check if all files are uploaded
+  let checkLength = Object.keys(gameAttributes.valid).length === 4; // in our case we only need to check for the map, bug1, bug2 and number of attributes
+
+  // if all the conditions are met, proceed to the game page
+  if (gameAttrValid && validObjInGameAttr && allFilesUploaded && checkLength) {
+      window.location.href = 'mainPage.html';
   }
 }

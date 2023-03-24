@@ -1,14 +1,55 @@
-form {
-    margin-top: 50px;
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: white;
+}
+
+.formsection {
+    width: 100vw;
+    text-align: center;
+}
+
+.errsection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.successsection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formsection .mainDiv {
+
+    display: block;
+    margin-top: -100px;
+}
+
+.formsection .mainDiv div {
+    margin-bottom: 20px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.success-txt {
+    margin-left: 12px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.error-txt {
+    margin-left: 12px;
+    text-align: center;
+    margin-top: 20px;
 }
 
 .uploadFile>input {
     display: none;
-  }
-
-.upBtn{
-    margin-top: 50px;
 }
+
 
 input[type="number"] {
     border-radius: 4px;
@@ -16,9 +57,58 @@ input[type="number"] {
     width: 100px;
     height: 30px;
     box-sizing: border-box;
+    margin-left: 20px;
+    background-color: #E2E2E2;
 }
 
-.mainDiv{
+input[type="file"] {
+    margin-top: 20px;
+}
+
+.success-message {
+    color: #22BE61;
+    font-weight: 400;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    display:none
+}
+
+.error-message {
+    color: #FF8181;
+    font-weight: 400;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    display:none
+}
+
+.header {
+    margin-top: 50px;
+    text-align: center;
+    width: 100vw;
+    align-items: center;
+    align-content: center;
+}
+
+.header a headerlogo img {
+    margin-top: 12px;
+    width: 23.59vw;
+    margin-bottom: 4.5vw;
+
+}
+
+.header headtext {
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    display: block;
+    color: #000;
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.mainDiv {
     display: grid;
     grid-template-columns: auto;
     grid-gap: 20px;
